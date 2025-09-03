@@ -18,12 +18,16 @@ export function CartProvider({children}: {children: React.ReactNode}) {
 
     const [cartCode, setCartCode] = useState<string | null>(null)
     const [cartItemsCount, setCartItemsCount] = useState(0)
+    const [isClient, setIsClient] = useState(false)
 
     const refreshCartStats = async () => {
-        if (!cartCode) return;
+        if (!cartCode || !isClient) return;
         
         try {
+            console.log('Fetching cart stats for cartCode:', cartCode, 'BASE_URL:', process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
             const response = await api.get(`get_cart_stat/?cart_code=${cartCode}`)
+            console.log('Cart stats response:', response.data);
+            
             if (response && response.data && typeof response.data.num_of_items === 'number') {
                 setCartItemsCount(Math.max(0, response.data.num_of_items))
             } else {
@@ -39,8 +43,14 @@ export function CartProvider({children}: {children: React.ReactNode}) {
                     return;
                 }
             }
-            // Only log non-404 errors
+            // Log all errors for debugging
             console.error('Error refreshing cart stats:', err)
+            console.error('Error details:', {
+                cartCode,
+                baseURL: process.env.NEXT_PUBLIC_BACKEND_BASE_URL,
+                isClient,
+                error: err
+            });
             setCartItemsCount(0)
         }
     }
@@ -52,16 +62,24 @@ export function CartProvider({children}: {children: React.ReactNode}) {
     }, [cartCode])
 
     useEffect(() => {
-        let code = localStorage.getItem('cartCode')
-        if(!code){
-            code = generateRandomString()
-            localStorage.setItem('cartCode', code)
+        // Set client-side flag
+        setIsClient(true)
+        
+        // Only access localStorage on client-side
+        if (typeof window !== 'undefined') {
+            let code = localStorage.getItem('cartCode')
+            if(!code){
+                code = generateRandomString()
+                localStorage.setItem('cartCode', code)
+            }
+            setCartCode(code)
         }
-        setCartCode(code)
     }, [])
 
     function clearCartCode() {
-        localStorage.removeItem('cartCode')
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('cartCode')
+        }
         setCartCode(null)
         setCartItemsCount(0)
     }

@@ -72,11 +72,11 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
         </Link>
       )}
 
-      <Link href={`/cart/${cartCode}`}>
+      <Link href={`/cart/${cartCode || ''}`}>
         <div className="relative flex items-center justify-center h-[60px] w-[60px] cursor-pointer">
           <FaShoppingCart className="text-4xl" />
           {cartItemsCount > 0 && (
-            <span className="absolute top-0 right-0 px-2 py-1 bg-black rounded-full text-white">
+            <span className="absolute top-0 right-0 px-2 py-1 bg-black rounded-full text-white text-xs">
               {cartItemsCount}
             </span>
           )}
