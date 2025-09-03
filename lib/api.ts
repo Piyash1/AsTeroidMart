@@ -2,8 +2,8 @@ import axios from 'axios';
 import { CategoryDetail, ProductDetail  } from './type';
 import { redirect } from 'next/navigation';
 
-export const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || 'https://asteroidmart-ecommerce-fullstack-production.up.railway.app/api';
-export const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || 'https://asteroidmart-ecommerce-fullstack-production.up.railway.app';
+export const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL
+export const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL
 
 export const api = axios.create({
     baseURL: BASE_URL,
