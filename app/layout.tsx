@@ -5,6 +5,7 @@ import Footer from "@/components/footer/Footer";
 import NavBarContainer from "@/components/navbar/NavBarContainer";
 import { ToastContainer } from 'react-toastify';
 import { CartProvider } from "@/context/CartContext";
+import { Analytics } from "@vercel/analytics/next"
 
 const ubuntu = Ubuntu({
   weight: ["400", "500", "700"], // Changed "600" to "700"
@@ -30,6 +31,7 @@ export default function RootLayout({
             <NavBarContainer />
             <ToastContainer />
             {children}
+            <Analytics />
             <Footer />
           </CartProvider>
         </main>
