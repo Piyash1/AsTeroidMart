@@ -19,7 +19,7 @@ const ProductCard = ({product}: {product: Product}) => {
 
   const badge = getRandomBadge()
   const isOnSale = badge === 'Sale'
-  const originalPrice = isOnSale ? (parseFloat(product.price) * 1.3).toFixed(2) : null
+  const originalPrice = isOnSale ? (product.price * 1.3).toFixed(2) : null
 
   return (
     <div 
@@ -108,7 +108,7 @@ const ProductCard = ({product}: {product: Product}) => {
           )}
           {isOnSale && (
             <span className="text-sm font-semibold text-red-500 bg-red-50 px-2 py-1 rounded">
-              Save {((parseFloat(originalPrice!) - parseFloat(product.price)) / parseFloat(originalPrice!) * 100).toFixed(0)}%
+              Save {((parseFloat(originalPrice!) - product.price) / parseFloat(originalPrice!) * 100).toFixed(0)}%
             </span>
           )}
         </div>
