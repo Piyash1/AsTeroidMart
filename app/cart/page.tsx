@@ -1,28 +1,31 @@
 import React from 'react'
-import Link from "next/link"
+import EmptyState from '@/components/ui/EmptyState'
 
 const CartPage = () => {
+  const cartIcon = (
+    <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+    </svg>
+  )
+
   return (
-    <section className="w-full bg-gray-100">
-
-
-    <section className="bg-gray-100 px-6 py-16 text-center main-max-width mx-auto padding-x">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <h1 className="text-4xl font-bold text-gray-900 leading-tight md:text-5xl">
-          You haven&apos;t added any item to your cart.
-        </h1>
-
-        <Link
-          href="/"
-          className="inline-block bg-black text-white text-lg font-medium px-6 py-3 rounded-lg shadow-md hover:bg-gray-800 transition-all"
-        >
-          Go back home
-        </Link>
+    <section className="w-full bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+      <div className="main-max-width mx-auto padding-x relative">
+        <EmptyState
+          icon={cartIcon}
+          title="Your Cart is Empty"
+          description="Looks like you haven't added any items to your cart yet. Start shopping to discover amazing products and fill your cart with things you love!"
+          primaryAction={{
+            label: "Start Shopping",
+            href: "/"
+          }}
+          secondaryAction={{
+            label: "Browse Categories",
+            href: "/#product_section"
+          }}
+        />
       </div>
     </section>
-
-    
-  </section>
   )
 }
 

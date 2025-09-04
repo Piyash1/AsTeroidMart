@@ -93,10 +93,10 @@ const CartItem = ({cartitem}: {cartitem: CartItemtype}) => {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-6 border-b border-gray-200 py-4 mb-6 w-full flex-wrap bg-white px-4 rounded-lg shadow-sm">
+      <div className="flex items-center justify-between gap-6 border-b border-gray-100 py-6 px-8 w-full flex-wrap hover:bg-gray-50 transition-colors duration-200">
       
           {/* Product Image */}
-          <div className="relative overflow-hidden w-[70px] h-[70px] rounded-lg border border-gray-200">
+          <div className="relative overflow-hidden w-[80px] h-[80px] rounded-2xl border border-gray-200 shadow-sm">
             <Image
               src={`${MEDIA_BASE_URL}${cartitem.product.image}`}
               alt="cartitem-img"
@@ -106,52 +106,62 @@ const CartItem = ({cartitem}: {cartitem: CartItemtype}) => {
           </div>
       
           {/* Product Details - Name and Price */}
-          <div className="flex-1 min-w-[120px]">
-            <p className="font-semibold text-gray-800">{cartitem.product.name}</p>
-            <p className="text-gray-600 text-sm mt-1">${cartitem.product.price}</p>
+          <div className="flex-1 min-w-[150px]">
+            <h3 className="font-semibold text-lg text-gray-900 mb-1">{cartitem.product.name}</h3>
+            <p className="text-gray-600 text-base">${cartitem.product.price} each</p>
           </div>
       
           {/* Quantity Selector */}
-          <div className="flex items-center justify-center gap-2 bg-gray-100 px-2 py-1 rounded-md">
+          <div className="flex items-center justify-center gap-1 bg-gray-50 px-3 py-2 rounded-xl border border-gray-200">
             {/* Decrease Quantity Button */}
             <button 
-              className="p-2 rounded-md bg-white border hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-white border border-gray-300 hover:bg-gray-100 hover:border-gray-400 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center"
               onClick={decreaseQuantity}
               disabled={quantity <= 1}
             >
-              <Minus className="w-5 h-5 text-gray-700" />
+              <Minus className="w-4 h-4 text-gray-700" />
             </button>
       
             {/* Quantity Display */}
-            <div className="w-[50px] h-[40px] flex items-center justify-center font-medium bg-white border border-gray-300 rounded-md shadow-sm">
+            <div className="w-[60px] h-8 flex items-center justify-center font-semibold bg-white border border-gray-300 rounded-lg shadow-sm text-gray-900">
               {quantity}
             </div>
       
             {/* Increase Quantity Button */}
             <button 
             onClick={increaseQuantity}
-              className="p-2 rounded-md bg-white border hover:bg-gray-200 transition cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-white border border-gray-300 hover:bg-gray-100 hover:border-gray-400 transition cursor-pointer flex items-center justify-center"
             >
-              <Plus className="w-5 h-5 text-gray-700" />
+              <Plus className="w-4 h-4 text-gray-700" />
             </button>
           </div>
       
           {/* Subtotal Price */}
-          <p className="text-lg font-semibold text-gray-800">${formattedSubtotal}</p>
+          <div className="text-right">
+            <p className="text-xl font-bold text-gray-900">${formattedSubtotal}</p>
+            <p className="text-sm text-gray-500">Subtotal</p>
+          </div>
       
-          {/* Remove Item Button */}
-          <button 
-            onClick={() => setShowDeleteModal(true)}
-            disabled={cartitemDeleteLoading}
-            className="p-2 rounded-md bg-red-50 hover:bg-red-100 transition text-red-500 border border-red-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <X className="w-5 h-5" />
-          </button>
-      
-          {/* Update Cart Button */}
-          <Button className='update-item-btn' disabled={cartitemUpdateLoading} handleClick={handleUpdateCartItem}>
-            {cartitemUpdateLoading ? "Updating..." : "Update Cart"}
-          </Button>
+          {/* Action Buttons */}
+          <div className="flex items-center gap-3">
+            {/* Update Cart Button */}
+            <Button 
+              className='bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-6 py-2 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none' 
+              disabled={cartitemUpdateLoading} 
+              handleClick={handleUpdateCartItem}
+            >
+              {cartitemUpdateLoading ? "Updating..." : "Update"}
+            </Button>
+
+            {/* Remove Item Button */}
+            <button 
+              onClick={() => setShowDeleteModal(true)}
+              disabled={cartitemDeleteLoading}
+              className="w-10 h-10 rounded-xl bg-red-50 hover:bg-red-100 transition text-red-500 border border-red-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
        
         </div>
 

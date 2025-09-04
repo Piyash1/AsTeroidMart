@@ -15,7 +15,7 @@ const NavBarContainer = async () => {
     : undefined
 
   return (
-    <nav className="bg-[whitesmoke] sticky top-0 z-20 w-full py-4">
+    <nav className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 w-full shadow-sm">
         <NavBar loggedInUser={loggedInUser} />
     </nav>
   )

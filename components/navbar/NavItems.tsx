@@ -22,62 +22,76 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
   return (
     <div
       className={cn(
-        "flex items-center justify-center gap-6",
-        mobile ? "flex-col" : "flex-row"
+        "flex items-center justify-center gap-4",
+        mobile ? "flex-col gap-6" : "flex-row"
       )}
     >
       {loggedInUser ? (
         <>
-          <div className="w-[50px] h-[50px] rounded-full overflow-hidden shadow-md relative">
-            {/* Profile picture container */}
-            {loggedInUser.image ? (
-              <Image
-                src={loggedInUser.image}
-                alt="profile pic"
-                className="object-cover"
-                fill
-                unoptimized={true}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const fallback = target.nextElementSibling as HTMLElement;
-                  if (fallback) fallback.style.display = 'flex';
-                }}
-              />
-            ) : null}
-            <div 
-              className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-700 font-semibold"
-              style={{ display: loggedInUser.image ? 'none' : 'flex' }}
-            >
-              {loggedInUser.name?.charAt(0)?.toUpperCase() || "U"}
+          {/* Profile Section */}
+          <div className="flex items-center gap-3">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 shadow-sm">
+              {loggedInUser.image ? (
+                <Image
+                  src={loggedInUser.image}
+                  alt="profile pic"
+                  className="object-cover"
+                  fill
+                  unoptimized={true}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div 
+                className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm"
+                style={{ display: loggedInUser.image ? 'none' : 'flex' }}
+              >
+                {loggedInUser.name?.charAt(0)?.toUpperCase() || "U"}
+              </div>
             </div>
+
+            <Link
+              href="/profile"
+              className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200 hidden sm:block"
+            >
+              {loggedInUser.name || "User"}
+            </Link>
           </div>
 
-          <Link
-            href="/profile"
-            className="text-lg font-medium text-gray-900 hover:text-gray-700 transition"
-          >
-            {loggedInUser.name || "User"}
-          </Link>
-
+          {/* Logout Button */}
           <form action={signOutUser}>
-            <button type="submit" className="nav-btn">
+            <button 
+              type="submit" 
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 
+                       border border-gray-300 rounded-lg transition-all duration-200
+                       focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            >
               Logout
             </button>
           </form>
         </>
       ) : (
-        <Link href="/signin" className="nav-btn">
+        <Link 
+          href="/signin" 
+          className="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 
+                   border border-blue-600 rounded-lg transition-all duration-200
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
           Login
         </Link>
       )}
 
-      <Link href={`/cart/${cartCode || ''}`}>
-        <div className="relative flex items-center justify-center h-[60px] w-[60px] cursor-pointer">
-          <FaShoppingCart className="text-4xl" />
+      {/* Cart Icon */}
+      <Link href={`/cart/${cartCode || ''}`} className="relative group">
+        <div className="relative flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 group-hover:scale-105">
+          <FaShoppingCart className="text-xl text-gray-700 group-hover:text-gray-900" />
           {cartItemsCount > 0 && (
-            <span className="absolute top-0 right-0 px-2 py-1 bg-black rounded-full text-white text-xs">
-              {cartItemsCount}
+            <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
+              {cartItemsCount > 99 ? '99+' : cartItemsCount}
             </span>
           )}
         </div>

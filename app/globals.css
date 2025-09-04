@@ -8,16 +8,7 @@ html {
 
 
 @layer utilities {
-  .search-form {
-    @apply w-[300px] max-sm:w-[250px] max-sm:h-[40px] max-sm:text-[14px] 
-           h-[50px] bg-white border-3 border-black rounded-[80px] 
-           px-5 max-sm:px-3 flex flex-row items-center gap-5;
-  }
-
-  .nav-btn {
-    @apply px-4 py-2 bg-gray-900 text-white border border-gray-900 
-           rounded-md hover:bg-gray-700 transition cursor-pointer;
-  }
+  /* Modern navbar styles - using Tailwind classes directly in components */
 
   .flex-center {
     @apply flex items-center justify-center;
@@ -57,5 +48,12 @@ html {
 
   .address-btn{
     @apply px-4 py-2 bg-black text-white border border-black rounded-md hover:bg-gray-800 transition cursor-pointer
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
