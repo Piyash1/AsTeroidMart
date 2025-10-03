@@ -112,7 +112,7 @@ const ProductInfo = ({
     async function handleProductInWishlist() {
       if(loggedInUserEmail) {
         try {
-          const response = await api.get(`/product_in_wishlist?email=${loggedInUserEmail}&product_id=${product.id}`)
+          const response = await api.get(`product_in_wishlist?email=${loggedInUserEmail}&product_id=${product.id}`)
           setAddedToWishlist(response.data.product_in_wishlist)
           return response.data
         }

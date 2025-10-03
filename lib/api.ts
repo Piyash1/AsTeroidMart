@@ -3,16 +3,16 @@ import { CategoryDetail, ProductDetail  } from './type';
 import { redirect } from 'next/navigation';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL
-export const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL
+export const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || 'https://res.cloudinary.com/your_cloud_name/image/upload/'
 
 export const api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: BASE_URL?.endsWith('/') ? BASE_URL : `${BASE_URL}/`,
 });
 
 export async function getExistingUser(email: string | null | undefined) {
     try {
         const safeEmail = email ? encodeURIComponent(email) : '';
-        const response = await api.get(`/existing_user/${safeEmail}/`);
+        const response = await api.get(`existing_user/${safeEmail}/`);
         return response.data;
     } catch (err:unknown) {
         if(err instanceof Error) {
@@ -32,7 +32,7 @@ export async function createNewUser(data: {
     profile_picture_url: string | null | undefined;
 }) {
     try {
-        const response = await api.post('/create_user/', data);
+        const response = await api.post('create_user/', data);
         return response.data;
     }
     catch (err:unknown) {
