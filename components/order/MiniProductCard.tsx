@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { OrderItemType } from "@/lib/type";
-import { MEDIA_BASE_URL } from "@/lib/api";
+import { getImageUrl } from "@/lib/api";
 
 const MiniProductCard = ({ item }: { item: OrderItemType }) => {
   return (
@@ -10,7 +10,7 @@ const MiniProductCard = ({ item }: { item: OrderItemType }) => {
         <Image
           src={
             item?.product?.image
-              ? `${MEDIA_BASE_URL}${item.product.image}`
+              ? getImageUrl(item.product.image)
               : "/gaming_pad.jpg"
           }
           className="object-cover w-full h-full"

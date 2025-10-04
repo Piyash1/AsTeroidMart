@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Product } from '@/lib/type'
-import { MEDIA_BASE_URL } from '@/lib/api'
+import { getImageUrl } from '@/lib/api'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FaHeart, FaShoppingCart, FaEye } from 'react-icons/fa'
@@ -59,11 +59,7 @@ const ProductCard = ({product}: {product: Product}) => {
       <Link href={`/products/${product.slug}`}>
         <div className="relative w-full h-[220px] overflow-hidden bg-gray-100">
           <Image
-            src={product.image
-              ? (product.image.startsWith('http')
-                  ? product.image
-                  : `${MEDIA_BASE_URL}${product.image.startsWith('/') ? '' : '/'}${product.image}`)
-              : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="280" height="220" viewBox="0 0 280 220"><rect width="100%" height="100%" fill="%23f3f4f6"/></svg>'}
+            src={getImageUrl(product.image)}
             className={`object-cover w-full h-full transition-transform duration-500 ${
               isHovered ? 'scale-110' : 'scale-100'
             }`}

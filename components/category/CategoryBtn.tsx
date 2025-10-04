@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from "next/image"
 import Link from 'next/link'
 import { Category } from '@/lib/type'
-import { MEDIA_BASE_URL } from '@/lib/api'
+import { getImageUrl } from '@/lib/api'
 
 const CategoryBtn = ({ category, isActive = false }: { category: Category; isActive?: boolean }) => {
   const [isHovered, setIsHovered] = useState(false)
@@ -93,9 +93,7 @@ const CategoryBtn = ({ category, isActive = false }: { category: Category; isAct
       <div className={`relative w-10 h-10 ${style.iconBg} rounded-xl flex items-center justify-center shadow-sm transition-all duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}>
         {category.image ? (
           <Image
-            src={category.image.startsWith('http')
-              ? category.image
-              : `${MEDIA_BASE_URL}${category.image.startsWith('/') ? '' : '/'}${category.image}`}
+            src={getImageUrl(category.image)}
             width={24}
             height={24}
             className="object-contain"

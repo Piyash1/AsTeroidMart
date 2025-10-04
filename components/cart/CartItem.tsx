@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Minus, Plus, X, TrashIcon } from 'lucide-react'
 import Button from '../uiComponents/Button'
 import { CartItemtype } from '@/lib/type'
-import { MEDIA_BASE_URL } from '@/lib/api'
+import { getImageUrl } from '@/lib/api'
 import { useState } from 'react'
 import { useCart } from '@/context/CartContext'
 import { toast } from 'react-toastify'
@@ -98,7 +98,7 @@ const CartItem = ({cartitem}: {cartitem: CartItemtype}) => {
           {/* Product Image */}
           <div className="relative overflow-hidden w-[80px] h-[80px] rounded-2xl border border-gray-200 shadow-sm">
             <Image
-              src={`${MEDIA_BASE_URL}${cartitem.product.image}`}
+              src={getImageUrl(cartitem.product.image)}
               alt="cartitem-img"
               className="object-cover"
               fill

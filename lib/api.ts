@@ -3,7 +3,31 @@ import { CategoryDetail, ProductDetail  } from './type';
 import { redirect } from 'next/navigation';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL
-export const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || 'https://res.cloudinary.com/your_cloud_name/image/upload/'
+export const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || 'https://res.cloudinary.com/dyflgeho0/image/upload/'
+
+// Helper function to construct proper image URLs
+export const getImageUrl = (imagePath: string | null | undefined): string => {
+  if (!imagePath) {
+    return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="280" height="220" viewBox="0 0 280 220"><rect width="100%" height="100%" fill="%23f3f4f6"/></svg>';
+  }
+  
+  // If it's already a full URL (starts with http), return as is
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  }
+  
+  // If the imagePath already contains 'image/upload/', it's a Cloudinary path
+  // and we need to construct the full URL without duplicating 'image/upload/'
+  if (imagePath.includes('image/upload/')) {
+    // Extract the cloud name from MEDIA_BASE_URL and construct the full URL
+    const baseUrl = MEDIA_BASE_URL.replace('/image/upload/', '');
+    return `${baseUrl}/${imagePath}`;
+  }
+  
+  // If it's a relative path, prepend the MEDIA_BASE_URL
+  const cleanPath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
+  return `${MEDIA_BASE_URL}${cleanPath}`;
+}
 
 export const api = axios.create({
     baseURL: BASE_URL?.endsWith('/') ? BASE_URL : `${BASE_URL}/`,

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from "next/image"
 import { Category } from '@/lib/type'
-import { MEDIA_BASE_URL, getCategoryDetail } from '@/lib/api'
+import { getImageUrl, getCategoryDetail } from '@/lib/api'
 import Link from 'next/link'
 import { FaArrowRight } from 'react-icons/fa'
 
@@ -102,9 +102,7 @@ const CategoryCard = ({cat}: {cat: Category}) => {
         {/* Category Icon */}
         <div className={`relative ${style.iconBg} p-4 rounded-2xl shadow-sm transition-all duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}>
           <Image
-            src={cat.image.startsWith('http')
-              ? cat.image
-              : `${MEDIA_BASE_URL}${cat.image.startsWith('/') ? '' : '/'}${cat.image}`}
+            src={getImageUrl(cat.image)}
             alt={cat.name}
             width={32}
             height={32}

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "../uiComponents/Button";
 import { ProductDetail } from "@/lib/type";
-import { MEDIA_BASE_URL, api, checkProductInCart } from "@/lib/api";
+import { getImageUrl, api, checkProductInCart } from "@/lib/api";
 import { useCart } from "@/context/CartContext";
 import { addToCartAction, addToWishlistAction } from "@/lib/actions";
 import { toast } from "react-toastify";
@@ -134,15 +134,7 @@ const ProductInfo = ({
         {/* Product Image */}
         <div className="w-[450px] h-[500px] relative overflow-hidden rounded-3xl shadow-2xl border border-gray-100 max-lg:w-full max-lg:h-[400px]">
           <Image
-            src={
-              product.image
-                ? product.image.startsWith("http")
-                  ? product.image
-                  : `${MEDIA_BASE_URL}${
-                      product.image.startsWith("/") ? "" : "/"
-                    }${product.image}`
-                : "/placeholder.svg"
-            }
+            src={getImageUrl(product.image)}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, 450px"
